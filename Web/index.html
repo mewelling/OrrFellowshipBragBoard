@@ -1,0 +1,37 @@
+<html lang="en" >
+<head>
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+  <script src="app.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+</head>
+<body ng-app="BlankApp" ng-cloak>
+  <!-- Your HTML content here --> 
+    <h1>Orr Fellowship Brag Board</h1>
+    <div ng-controller="AppCtrl as appCtrl" ng-cloak ng-init="getItems()" id="main">
+	    <md-grid-list
+	        md-cols-xs="1" md-cols-sm="6" md-cols-md="8" md-cols-gt-md="14"
+	        md-row-height-gt-md="1:1" md-row-height="1:1"
+	        md-gutter="12px" md-gutter-gt-sm="8px" >
+
+  			<md-grid-tile ng-repeat="entry in topBrags track by $index" ng-class="entry.color"
+	          md-rowspan="{{ entry.length }}" md-colspan="{{ entry.width }}" md-colspan-sm="1">
+	        	<h2>{{ entry.message }}</h2>
+	    	</md-grid-tile>
+
+	    </md-grid-list>
+	</div>
+
+</body>
+</html>

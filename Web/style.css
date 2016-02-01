@@ -1,0 +1,55 @@
+md-grid-list {
+  margin: 8px; 
+}
+.orr1 {
+  background: #3e6074; 
+}
+.orr2 {
+  background: #192a47; 
+}
+.orr3 {
+  background: #ea4428; 
+}
+.orr4 {
+  background: #610041; 
+}
+md-grid-tile {
+  transition: all 400ms ease-out 50ms; 
+}
+
+h1 {
+	font-family: 'Cabin', sans-serif;
+	margin: 20px;
+	font-weight: 500;
+    color: #273855;
+    text-align: center;
+}
+
+h2 {
+	font-family: 'Cabin', sans-serif;
+	font-size: 16;
+	color: white;
+	text-align: center;
+	margin: 10px;
+}
+
+h3 {
+	font-family: 'Cabin', sans-serif;
+	font-size: 14;
+	font-weight: 500;
+    color: #273855;
+    text-align: center;
+}
+
+#main {
+	width:90%; 
+	height:90%; 
+	margin:0 auto;
+}
+
+#footer {
+   position:relative;
+   bottom:0;
+   width:100%;
+   height:60px; 
+}
