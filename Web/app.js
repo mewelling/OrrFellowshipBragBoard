@@ -33,7 +33,6 @@ angular.module('BlankApp', ['ngMaterial']).controller('AppCtrl', function($scope
 	function callServer() {
 		$http({
 		    method: 'GET',
-		    // url: 'http://10.141.178.61:3001/brags'
 		    url: 'https://sezhg1f3l6.execute-api.us-east-1.amazonaws.com/prod/OrrFellowshipBragBoard'
 		}).then(function successCallback(response) {
 		    // this callback will be called asynchronously
