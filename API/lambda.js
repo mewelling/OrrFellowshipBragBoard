@@ -4,7 +4,8 @@ var colorArray = ["orr1","orr2","orr3","orr4"];
 exports.handler = function(event, context) {
 
 	var client = new Client();
-	// direct way 
+	
+	// You will probably want to use your own Google Spreadsheet here :)
 	client.get("https://docs.google.com/a/orrfellowship.org/spreadsheets/d/1DAJAojHrH2RNgP1HWojkPsbId6fWeCBDEtIUKHRNkDE/export?gid=1726067716&format=csv", function (data, response) {
 
 		var name = data.toString('utf8');
@@ -17,7 +18,7 @@ exports.handler = function(event, context) {
 			var currentLine = dataArray[i].trim();
 			var components = currentLine.split(',');
 
-			//Date stuff to skip brags older than one month
+			// Date stuff to skip brags older than one month
 			var monthAgoDate = new Date();
 			if (monthAgoDate.getMonth() == 1) {
 				monthAgoDate.setMonth(12);
@@ -29,8 +30,8 @@ exports.handler = function(event, context) {
 			if (bragDate.getTime() < monthAgoDate.getTime()) {
 				continue;
 			}
-			console.log(monthAgoDate,bragDate);
 
+			// Remove the timestamp and any quotes used to preserve CSV formatting
 			components.splice(0,1);
 			currentLine = components.join('|');
 			if(currentLine.charCodeAt(0) == 34) {

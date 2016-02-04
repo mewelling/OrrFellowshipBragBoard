@@ -33,6 +33,7 @@ angular.module('BlankApp', ['ngMaterial']).controller('AppCtrl', function($scope
 	function callServer() {
 		$http({
 		    method: 'GET',
+		    // You will probably want to use your own Lambda API here :)
 		    url: 'https://sezhg1f3l6.execute-api.us-east-1.amazonaws.com/prod/OrrFellowshipBragBoard'
 		}).then(function successCallback(response) {
 		    // this callback will be called asynchronously
