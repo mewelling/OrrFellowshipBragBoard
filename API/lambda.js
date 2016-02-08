@@ -41,7 +41,7 @@ exports.handler = function(event, context) {
 			var randColor = colorArray[Math.floor((Math.random() * colorArray.length-1) + 1)];
 			var dimentions = {'min':0,'max':0};
 
-			if (currentLine.length < 30) {
+			if (currentLine.length < 15) {
 				//sum 1
 				dimentions['min'] = 1;
 				dimentions['max'] = 1;
