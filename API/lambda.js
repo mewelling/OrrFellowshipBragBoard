@@ -1,88 +1,46 @@
-var https = require('https');
-var colorArray = ["orr1","orr2","orr3","orr4"];
+const request = require('request');
+const csv = require('csv');
+const moment = require('moment');
+const colorClasses = ['orr1', 'orr2', 'orr3', 'orr4'];
 
 exports.handler = function(event, context, callback) {
 
-    var body = '';
+  const oneMonthAgo = moment().subtract(2, 'month');
+  const lines = [];
 
-	  // You will probably want to use your own Google Spreadsheet here :)
-	  https.get(process.env.DOCS_API_URL, function (res) {
+  const stream = request.get(process.env.DOCS_API_URL); // fetch csv
 
-        res.on('data', function (chunk) {
-            body += chunk;
-        });
+  stream
+    .pipe(csv.parse({ columns: true }))
+    .pipe(csv.transform(data => {
+      if (moment(data.Timestamp, 'L').isAfter(oneMonthAgo)) lines.push(data['Who rocks?'])
+    }));
 
-        res.on('end', function() {
+  stream.on('end', () => {
+    const output = [];
 
-    		var name = body.toString('utf8');
-    		var dataArray = name.split('\n');
-    		dataArray.splice(0,1);
+    lines.forEach(currentLine => {
 
-    		var output = [];
+      let dimentions;
+      if (currentLine.length < 15) dimentions = { min: 1, max: 1 };
+      else if (currentLine.length < 100) dimentions = { min: 2, max: 2 };
+      else dimentions = { min: 3, max: 1 };
 
-    		for (i = 0; i < dataArray.length; i++) {
-    			var currentLine = dataArray[i].trim();
-    			var components = currentLine.split(',');
+      const outputData = { 
+        length: randomize(dimentions), 
+        width: randomize(dimentions), 
+        color: colorClasses[randomize({ min: 0, max: colorClasses.length })], 
+        message: currentLine 
+      };
 
-    			// Date stuff to skip brags older than one month
-    			var monthAgoDate = new Date();
-    			if (monthAgoDate.getMonth() == 1) {
-    				monthAgoDate.setMonth(12);
-    				monthAgoDate.setFullYear(monthAgoDate.getFullYear() - 1);
-    			} else {
-    				monthAgoDate.setMonth(monthAgoDate.getMonth() - 1);
-    			}
-    			var bragDate = new Date(components[0]);
-    			if (bragDate.getTime() < monthAgoDate.getTime()) {
-    				continue;
-    			}
-
-    			// Remove the timestamp and any quotes used to preserve CSV formatting
-    			components.splice(0,1);
-    			currentLine = components.join('|');
-    			if(currentLine.charCodeAt(0) == 34) {
-    				currentLine = currentLine.substring(1, currentLine.length - 1);
-    			}
-
-    			var randColor = colorArray[Math.floor((Math.random() * colorArray.length-1) + 1)];
-    			var dimentions = {'min':0,'max':0};
-
-    			if (currentLine.length < 15) {
-    				//sum 1
-    				dimentions['min'] = 1;
-    				dimentions['max'] = 1;
-    			} else if (currentLine.length < 70) {
-    				//sum 2
-    				dimentions['min'] = 2;
-    				dimentions['max'] = 2;
-    			} else if (currentLine.length < 100) {
-    				//sum 3
-    				dimentions['min'] = 2;
-    				dimentions['max'] = 2;
-    			} else if (currentLine.length < 130) {
-    				//sum 4
-    				dimentions['min'] = 3;
-    				dimentions['max'] = 1;
-    			} else {
-    				dimentions['min'] = 3;
-    				dimentions['max'] = 1;
-    			}
-    			var randlength = Math.floor((Math.random() * dimentions['max']) + dimentions['min']);
-    			var randWidth = Math.floor((Math.random() * dimentions['max']) + dimentions['min']);
-    			var outputData = {'length':randlength,'width':randWidth,'color':randColor,'message':currentLine};
-
-    			output.push(outputData);
-    		}
-
-    		var time = new Date();
-    		console.log("Returned " + output.length + " values on " + time);
-    		callback(null, output); // SUCCESS with message
-    	});
+      output.push(outputData);
     });
 
+    console.log(`Returned ${output.length} values on ${new Date()}`);
+    callback(null, output); // SUCCESS with message
+  });
 };
 
-function shuffle(o){
-    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
+function randomize({ min, max}) {
+  return Math.floor((Math.random() * max) + min);
 }

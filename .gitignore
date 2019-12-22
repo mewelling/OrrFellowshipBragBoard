@@ -35,3 +35,6 @@ build/Release
 
 # Spreadsheet URL for reference
 settings.conf
+
+# Env Configs
+*.env

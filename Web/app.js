@@ -3,9 +3,6 @@ angular.module('BlankApp', ['ngMaterial']).controller('AppCtrl', function($scope
 	$scope.serverData = [];
 	$scope.topBrags = [];
 
-	var update;
-	var reloadData;
-
 	$scope.getItems = function() {
 		callServer();
 
@@ -22,7 +19,7 @@ angular.module('BlankApp', ['ngMaterial']).controller('AppCtrl', function($scope
 	$scope.getTopBrags = function() {
 		var temp = $scope.serverData.slice(0, $scope.serverData > 20 ? 20 : $scope.serverData.length);
 		shuffle(temp);
-		$scope.topBrags = temp.slice(0,10);
+    $scope.topBrags = temp.slice(0,10);
 	}
 
 	function shuffle(o){
@@ -34,7 +31,8 @@ angular.module('BlankApp', ['ngMaterial']).controller('AppCtrl', function($scope
 		$http({
 		    method: 'GET',
 		    // You will probably want to use your own Lambda API here :)
-		    url: 'https://sezhg1f3l6.execute-api.us-east-1.amazonaws.com/prod/OrrFellowshipBragBoard'
+        // url: 'https://sezhg1f3l6.execute-api.us-east-1.amazonaws.com/prod/OrrFellowshipBragBoard'
+        url: 'http://localhost:3001/brags'
 		}).then(function successCallback(response) {
 		    // this callback will be called asynchronously
 		    // when the response is available

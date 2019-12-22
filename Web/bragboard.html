@@ -29,21 +29,21 @@
 
 </head>
 <body ng-app="BlankApp" ng-cloak>
-  <!-- Your HTML content here -->
-    <h1>Orr Fellowship Brag Board</h1>
-    <div ng-controller="AppCtrl as appCtrl" ng-cloak ng-init="getItems()" id="main">
-	    <md-grid-list
-	        md-cols-xs="1" md-cols-sm="6" md-cols-md="8" md-cols-gt-md="14"
-	        md-row-height-gt-md="1:1" md-row-height="1:1"
-	        md-gutter="12px" md-gutter-gt-sm="8px" >
+  <h1>Orr Fellowship Brag Board</h1>
+  <div ng-controller="AppCtrl as appCtrl" ng-cloak ng-init="getItems()" id="main">
+    <md-grid-list
+        md-cols="14"
+        md-row-height="1:1"
+        md-gutter="12px" md-gutter-gt-sm="8px" >
 
-  			<md-grid-tile ng-repeat="entry in topBrags track by $index" ng-class="entry.color"
-	          md-rowspan="{{ entry.length }}" md-colspan="{{ entry.width }}" md-colspan-sm="1">
-	        	<h2>{{ entry.message }}</h2>
-	    	</md-grid-tile>
+      <md-grid-tile ng-repeat="entry in topBrags track by $index" ng-class="entry.color"
+          md-rowspan="{{ entry.length }}" md-colspan="{{ entry.width }}">
+          <h2>{{ entry.message }}</h2>
+      </md-grid-tile>
 
-	    </md-grid-list>
-	</div>
+    </md-grid-list>
+  </div>
+  <div class="footer">Designed by Michael Welling, Class of 2014</span>
 
 </body>
 </html>
